@@ -12,7 +12,7 @@ var open = require('amqplib').connect('amqp://abx-admin:abx01@localhost');
     
     var msg = 'Hello World!';
 
-    ch.assertQueue(q, {durable: false});
+    ch.assertQueue(q, {durable: true});
     // Note: on Node 6 Buffer.from(msg) should be used
     ch.sendToQueue(q, new Buffer(msg));
     console.log(" [x] Sent %s", msg);
@@ -23,6 +23,7 @@ var open = require('amqplib').connect('amqp://abx-admin:abx01@localhost');
 open.then(function(conn) {
   return conn.createChannel();
 }).then(function(ch) {
+  ch.assertQueue(q, {durable: true});
   return ch.assertQueue(q).then(function(ok) {
     return ch.sendToQueue(q, new Buffer('something to do'));
   });

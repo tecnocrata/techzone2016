@@ -1,15 +1,15 @@
-var express  = require('express');
-var config   = require('./config');
-var path     = require('path');
-var app      = express();
-var server   = require('http').createServer(app);
-var info     = require('./controllers/info');
-var sender   = require('./lib/bus/publisher');
+var express = require('express');
+var config = require('./config');
+var path = require('path');
+var app = express();
+var server = require('http').createServer(app);
+var info = require('./controllers/info');
+var sender = require('./lib/bus/publisher');
 var receiver = require('./lib/bus/subscriber');
 //var services = require('./services');
 var request = require('request');
 
-var mongodb = require( 'mongodb' ); 
+var mongodb = require('mongodb');
 var MongoClient = mongodb.MongoClient;
 var assert = require('assert');
 
@@ -18,18 +18,23 @@ app.get('/', function (req, res) {
 });
 
 app.get('/send', function (req, res) {
-  res.send('This page is sending data\n');
-  sender.publishMessage('testexchange', 'This is a test !', '');
+  //sender.publishMessage('testexchange', 'This is a test !', '');
+  if (!req.query.message){
+    res.status(401).send ('Message parameter required!');
+    return;
+  }
+  sender.sendUnicastMessage('hello', req.query.message);
+  res.status(200).end();
 });
 
 app.get('/receive', function (req, res) {
   res.send('This page is receiving data\n');
-  receiver.subscribeMessage('testexchange', '', function(message) {
+  receiver.subscribeMessage('testexchange', '', function (message) {
     console.log('Received message: ' + message.data.toString('utf-8'));
   });
 });
 
-app.get('/info', function (req,res) {
+app.get('/info', function (req, res) {
   /*services.getMongoDbConnection(function(error, db) {
     var document = {name:"Alex", title:"About MongoDB"};
     db.collection('test').insert(document, function(err, records) {
@@ -60,22 +65,22 @@ app.get('/info', function (req,res) {
     });
 });*/
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not found');
   err.status = 404;
   next(err);
 });
 
 function startServer() {
-  app.microserviceapp = server.listen(config.express.port, config.express.ip, function() {
+  app.microserviceapp = server.listen(config.express.port, config.express.ip, function () {
     console.log('Express server listening on %d, in %s mode', config.express.port, app.get('env'));
   });
 }
 
 setImmediate(startServer);
 
-receiver.listenSimpleQueue ('hello', (msg)=>{
-  console.log ('Processing message now '+msg);
+receiver.listenSimpleQueue('hello', (msg) => {
+  console.log('Processing message now ' + msg);
 })
 
 module.exports = server;

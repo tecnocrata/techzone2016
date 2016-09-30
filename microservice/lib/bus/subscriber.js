@@ -1,3 +1,4 @@
+var util = require ('util');
 var open = require('amqplib').connect('amqp://abx-admin:abx01@localhost');
 /*open.then(function(conn) {
   return conn.createChannel();
@@ -22,8 +23,8 @@ function setupSimpleQueue(queueName, workerProcess) {
             return ch.consume(queueName, function (msg) {
                 if (msg !== null) {
                     //console.log(msg.content.toString());
-                    console.log ('Starting to process message...'+msg);
-                    workerProcess (msg);
+                    console.log('Starting to process message... --> ' + util.inspect(msg.content.toString(), { showHidden: false, depth: null }));
+                    workerProcess (msg.content.toString());
                     ch.ack(msg);
                 }
             });

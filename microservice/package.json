@@ -1,0 +1,21 @@
+{
+  "name": "microservice",
+  "version": "1.0.0",
+  "description": "Microservice small template",
+  "main": "app.js",
+  "scripts": {
+    "test": "npm test",
+    "start": "node server"
+  },
+  "keywords": [
+    "microservice"
+  ],
+  "author": "Enrique",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.14.0",
+    "mongodb": "^2.2.10",
+    "request": "^2.75.0",
+    "string": "^3.3.1"
+  }
+}

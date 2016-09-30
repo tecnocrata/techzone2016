@@ -3,7 +3,7 @@ var config   = require('./config');
 var path     = require('path');
 var app      = express();
 var server   = require('http').createServer(app);
-//var info     = require('./lib/controllers/info');
+var info     = require('./controllers/info');
 var sender   = require('./lib/bus/publisher');
 var receiver = require('./lib/bus/subscriber');
 //var services = require('./services');
@@ -29,18 +29,18 @@ app.get('/receive', function (req, res) {
   });
 });
 
-/*app.get('/info', function (req,res) {
-  services.getMongoDbConnection(function(error, db) {
+app.get('/info', function (req,res) {
+  /*services.getMongoDbConnection(function(error, db) {
     var document = {name:"Alex", title:"About MongoDB"};
     db.collection('test').insert(document, function(err, records) {
       if (err) throw err;
       console.log("Record added");
     });
-  });
+  });*/
   res.send(info.showInfo());
-});*/
+});
 
-app.get('/data', function(req, res) {
+/*app.get('/data', function(req, res) {
   var username= 'cf-requestor';
   var password= 'GenEfbeeWrosFexofufupniwydHeur';
   var url= 'https://cip-cf-api.apps.dev.labs.cf.canopy-cloud.com/cf';
@@ -58,7 +58,7 @@ app.get('/data', function(req, res) {
     },function (error, response, body) {
       res.send(body); 
     });
-});
+});*/
 
 app.use(function(req, res, next) {
   var err = new Error('Not found');
@@ -73,5 +73,9 @@ function startServer() {
 }
 
 setImmediate(startServer);
+
+receiver.listenSimpleQueue ('hello', (msg)=>{
+  console.log ('Processing message now '+msg);
+})
 
 module.exports = server;

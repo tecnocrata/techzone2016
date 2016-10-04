@@ -7,7 +7,9 @@ var MonosvcSchema = new mongoose.Schema({
   info: String,
   active: Boolean,
   imageName: String,
-  resized: Boolean
+  resized: Boolean,
+  pointedUser: Boolean,
+  tweeted: Boolean
 });
 
 export default mongoose.model('Monosvc', MonosvcSchema);

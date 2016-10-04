@@ -31,7 +31,7 @@ function setupSimpleQueue(queueName, workerProcess) {
             return channel.consume(queueName, function (msg) {
                 if (msg !== null) {
                     //console.log(msg.content.toString());
-                    console.log('Starting to process message... --> ' + util.inspect(msg.content.toString(), { showHidden: false, depth: null }));
+                    console.log('Starting to process Queue message... --> ' + util.inspect(msg.content.toString(), { showHidden: false, depth: null }));
                     workerProcess (msg.content.toString());
                     channel.ack(msg);
                 }

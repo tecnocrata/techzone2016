@@ -6,19 +6,21 @@ var server = require('http').createServer(app);
 var info = require('./controllers/info');
 var sender = require('./lib/bus/publisher');
 var receiver = require('./lib/bus/subscriber');
+var bole   = require('bole');
 //var services = require('./services');
 var request = require('request');
 
+bole.output({level: "debug", stream: process.stdout});
 var mongodb = require('mongodb');
 var MongoClient = mongodb.MongoClient;
 var assert = require('assert');
+var log = bole("server");
 
 app.get('/', function (req, res) {
   res.send('Hello there !\n');
 });
 
 app.get('/send', function (req, res) {
-  //sender.publishMessage('testexchange', 'This is a test !', '');
   if (!req.query.message){
     res.status(401).send ('Message parameter required!');
     return;
@@ -30,7 +32,7 @@ app.get('/send', function (req, res) {
 app.get('/receive', function (req, res) {
   res.send('This page is receiving data\n');
   receiver.subscribeMessage('testexchange', '', function (message) {
-    console.log('Received message: ' + message.data.toString('utf-8'));
+    log.info('Received message: ' + message.data.toString('utf-8'));
   });
 });
 
@@ -39,7 +41,7 @@ app.get('/info', function (req, res) {
     var document = {name:"Alex", title:"About MongoDB"};
     db.collection('test').insert(document, function(err, records) {
       if (err) throw err;
-      console.log("Record added");
+      log.info("Record added");
     });
   });*/
   res.send(info.showInfo());
@@ -73,14 +75,14 @@ app.use(function (req, res, next) {
 
 function startServer() {
   app.microserviceapp = server.listen(config.express.port, config.express.ip, function () {
-    console.log('Express server listening on %d, in %s mode', config.express.port, app.get('env'));
+    log.info('Express server listening on %d, in %s mode', config.express.port, app.get('env'));
   });
 }
 
 setImmediate(startServer);
 
 receiver.listenSimpleQueue('hello', (msg) => {
-  console.log('Processing message now ' + msg);
+  log.info('(Microservice) Processing message now ' + msg);
 })
 
 module.exports = server;

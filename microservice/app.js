@@ -81,8 +81,12 @@ function startServer() {
 
 setImmediate(startServer);
 
-receiver.listenSimpleQueue('hello', (msg) => {
-  log.info('(Microservice) Processing message now ' + msg);
+receiver.listenSimpleQueue('hello', msg => {
+  log.info('(Microservice) Processing message now ' + msg +' from Queue hello');
+});
+
+receiver.listenBroadcast ('ex.regards', msg =>{
+  log.info('(Microservice) Processing message now ' + msg +' from exchange ex.regards');
 })
 
 module.exports = server;

@@ -20,11 +20,14 @@ var open = require('amqplib').connect('amqp://abx-admin:abx01@localhost');
   setTimeout(function() { conn.close(); process.exit(0) }, 500);
 });*/
 
-open.then(function(conn) {
-  return conn.createChannel();
-}).then(function(ch) {
-  ch.assertQueue(q, {durable: true});
-  return ch.assertQueue(q).then(function(ok) {
-    return ch.sendToQueue(q, new Buffer('something to do'));
-  });
-}).catch(console.warn);
+open
+  .then(function (conn) {
+    return conn.createChannel();
+  })
+  .then(function (ch) {
+    ch.assertQueue(q, { durable: true });
+    return ch.assertQueue(q)
+      .then(function (ok) {
+        return ch.sendToQueue(q, new Buffer('something to do'));
+      });
+  }).catch(console.warn);

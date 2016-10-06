@@ -1,14 +1,14 @@
 var express = require('express');
 var config = require('./config');
 var path = require('path');
+var bole   = require('bole');
+var request = require('request');
 var app = express();
 var server = require('http').createServer(app);
 var info = require('./controllers/info');
 var sender = require('./lib/bus/publisher');
 var receiver = require('./lib/bus/subscriber');
-var bole   = require('bole');
 //var services = require('./services');
-var request = require('request');
 
 bole.output({level: "debug", stream: process.stdout});
 var mongodb = require('mongodb');

@@ -84,53 +84,58 @@ export function create(req, res) {
 
   //1. UploadImage
   let startDate = new Date();
-  /*sleep(1000, () => {
-    let endDate = new Date();
-    res.status(200).json({ start: startDate.toISOString(), end: endDate.toISOString() });
-  });*/
 
-  uploadImage()
-  .then (()=>{
-    //res.status(200).json({ start: startDate.toISOString(), end: endDate.toISOString() });
-    return notifyUser();
-  })
-  .then (()=>{
-    let endDate = new Date();
-    res.status(200).json({ start: startDate.toISOString(), end: endDate.toISOString() });
-  })
-  .catch((err)=>{
-    console.log ('Unexpected error '+err);
-    res.status (402).send (err);
-  })
+  uploadImage(req.body)
+    .then(() => {
+      //res.status(200).json({ start: startDate.toISOString(), end: endDate.toISOString() });
+      //return notifyUser();
+    })
+    .then(() => {
+      let endDate = new Date();
+      res.status(200).json({ start: startDate.toISOString(), end: endDate.toISOString() });
+    })
+    .catch((err) => {
+      console.log('Unexpected error ' + err);
+      res.status(402).send(err);
+    })
 
 
   //2. Product Owner: Notify User
   //3. Social Media Advisor: Give Badges to Each User for each UploadImage
   //4. Data Base Admin: Resize images!
   //5. Product Owner: Tweet the images
+
+  //Let's suppose another user add an image (call api using postman)
+
+  /*return Monosvc.create(req.body)
+    .then(respondWithResult(res, 201))
+    .catch(handleError(res));*/
 }
 
-function uploadImage(){
-  return sleep(300, () => {
-    console.log ('Image upload!');
-  });
+function uploadImage(entity) {
+  return Monosvc.create(entity)
+    .then(() => {
+      return sleep(300, () => {
+        console.log('Image upload!');
+      });
+    });
 }
 
-function notifyUser(){
+function notifyUser() {
   return sleep(500, () => {
-    console.log ('Email sent to user');
+    console.log('Email sent to user');
   });
 }
 
-function resizeImage(){
+function resizeImage() {
   return sleep(600, () => {
-    console.log ('Image resized');
+    console.log('Image resized');
   });
 }
 
-function tweetMessage(){
+function tweetMessage() {
   return sleep(400, () => {
-    console.log ('Message tweeted');
+    console.log('Message tweeted');
   });
 }
 

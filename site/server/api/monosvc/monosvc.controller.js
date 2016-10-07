@@ -62,8 +62,12 @@ function handleError(res, statusCode) {
 
 // Gets a list of Monosvcs
 export function index(req, res) {
+  console.log ('[GET /api/monosvc/] ....Trying to retrieve all content');
   return Monosvc.find().exec()
-    .then(respondWithResult(res))
+    .then(e=>{
+      console.log ('[GET /api/monosvc/] ...Result: '+e);
+      res.status(200).json(e);
+    })
     .catch(handleError(res));
 }
 
@@ -82,23 +86,23 @@ export function create(req, res) {
     return;
   }
 
+  console.log ('[POST /api/monosvc/] .... Trying to save the following content: '+ req.body);
   //1. UploadImage
   let startDate = new Date();
 
   uploadImage(req.body)
     .then(() => {
-      //res.status(200).json({ start: startDate.toISOString(), end: endDate.toISOString() });
+      res.status(200).end();
       //return notifyUser();
     })
-    .then(() => {
+/*    .then(() => {
       let endDate = new Date();
       res.status(200).json({ start: startDate.toISOString(), end: endDate.toISOString() });
-    })
+    })*/
     .catch((err) => {
       console.log('Unexpected error ' + err);
       res.status(402).send(err);
     })
-
 
   //2. Product Owner: Notify User
   //3. Social Media Advisor: Give Badges to Each User for each UploadImage

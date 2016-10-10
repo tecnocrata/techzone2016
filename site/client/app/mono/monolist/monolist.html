@@ -1,9 +1,11 @@
-<div>Monolithic - Photo Gallery</div>
+<div><h2>Monolithic - Photo Gallery</h2></div>
 
 <form>
-    <label for="imageName">~Upload image </label>
-    <input id="imageName" type="text" ng-model="$ctrl.imageName" />
-    <button ng-click="$ctrl.uploadImage()"> Upload now! </button>
+    <div class="imageentry-block">
+        <label for="imageName">Upload image * </label>
+        <input id="imageName" type="text" ng-model="$ctrl.imageName" />
+        <button ng-click="$ctrl.uploadImage()"> Upload now! </button>
+    </div>
     <div>
         <table>
             <thead>
@@ -11,12 +13,18 @@
                     <th>
                         Name
                     </th>
+                    <th>
+                        User Notified
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="item in $ctrl.images">
                     <td>
                         {{item.imageName}}
+                    </td>
+                    <td>
+                        <input type="checkbox" ng-model="item.userNotified" ng-disabled="true" />
                     </td>
                 </tr>
             </tbody>

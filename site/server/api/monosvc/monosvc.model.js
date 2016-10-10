@@ -6,10 +6,10 @@ var MonosvcSchema = new mongoose.Schema({
 /*  name: String,
   info: String,
   active: Boolean,*/
-  imageName: String, //uploaded
-  resized: Boolean, //resized
+    imageName: String, //uploaded
   userNotified: Boolean, //notified
   starts: Number, //badges
+  resized: Boolean, //resized
   tweeted: Boolean //tweeted
 });
 

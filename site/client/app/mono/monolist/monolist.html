@@ -16,6 +16,15 @@
                     <th>
                         User Notified
                     </th>
+                    <th>
+                        Badges
+                    </th>
+                    <th>
+                        Resized
+                    </th>
+                    <th>
+                        Tweeted
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -25,6 +34,15 @@
                     </td>
                     <td>
                         <input type="checkbox" ng-model="item.userNotified" ng-disabled="true" />
+                    </td>
+                    <td>
+                        {{item.stars}}
+                    </td>
+                    <td>
+                         <input type="checkbox" ng-model="item.resized" ng-disabled="true" />
+                    </td>
+                    <td>
+                         <input type="checkbox" ng-model="item.tweeted" ng-disabled="true" />
                     </td>
                 </tr>
             </tbody>

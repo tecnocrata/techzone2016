@@ -92,13 +92,24 @@ export function create(req, res) {
 
   uploadImage(req.body)
     .then(() => {
-      res.status(200).end();
-      //return notifyUser();
+      //res.status(200).end();
+      return notifyUser();
     })
-/*    .then(() => {
-      let endDate = new Date();
-      res.status(200).json({ start: startDate.toISOString(), end: endDate.toISOString() });
-    })*/
+   .then(() => {
+      //res.status(200).end();
+      return assignStars();
+    })
+    .then(() => {
+      //res.status(200).end();
+      return resizeImage();
+    })
+    .then(() => {
+      //res.status(200).end();
+      return tweetMessage();
+    })
+    .then(() => {
+      res.status(200).end();
+    })
     .catch((err) => {
       console.log('Unexpected error ' + err);
       res.status(402).send(err);
@@ -110,10 +121,6 @@ export function create(req, res) {
   //5. Product Owner: Tweet the images
 
   //Let's suppose another user add an image (call api using postman)
-
-  /*return Monosvc.create(req.body)
-    .then(respondWithResult(res, 201))
-    .catch(handleError(res));*/
 }
 
 function uploadImage(entity) {
@@ -128,6 +135,12 @@ function uploadImage(entity) {
 function notifyUser() {
   return sleep(500, () => {
     console.log('Email sent to user');
+  });
+}
+
+function assignStars() {
+  return sleep(100, () => {
+    console.log('Stars assigned to user');
   });
 }
 

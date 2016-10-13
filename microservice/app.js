@@ -29,12 +29,21 @@ app.get('/send', function (req, res) {
   res.status(200).end();
 });
 
-app.get('/receive', function (req, res) {
+app.get('/sendbrowser', function (req, res) {
+  if (!req.query.message){
+    res.status(401).send ('Message parameter required!');
+    return;
+  }
+  sender.sendStompMessage('image.upload', req.query.message);
+  res.status(200).end();
+});
+
+/*app.get('/receive', function (req, res) {
   res.send('This page is receiving data\n');
   receiver.subscribeMessage('testexchange', '', function (message) {
     log.info('Received message: ' + message.data.toString('utf-8'));
   });
-});
+});*/
 
 app.get('/info', function (req, res) {
   /*services.getMongoDbConnection(function(error, db) {

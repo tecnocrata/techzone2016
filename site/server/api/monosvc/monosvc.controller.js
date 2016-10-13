@@ -89,23 +89,27 @@ export function create(req, res) {
   console.log ('[POST /api/monosvc/] .... Trying to save the following content: '+ req.body);
   //1. UploadImage
   let startDate = new Date();
+  let entity =req.body;
+  let id;
 
-  uploadImage(req.body)
-    .then(() => {
+  uploadImage(entity)
+    .then(e => {
+      id = e._id;
       //res.status(200).end();
-      return notifyUser();
+      return notifyUser(id);
     })
    .then(() => {
       //res.status(200).end();
-      return assignStars();
+      let stars = Math.floor(Math.random() * 5) + 1;
+      return assignStars(id, stars);
     })
     .then(() => {
       //res.status(200).end();
-      return resizeImage();
+      return resizeImage(id);
     })
     .then(() => {
       //res.status(200).end();
-      return tweetMessage();
+      return tweetMessage(id);
     })
     .then(() => {
       res.status(200).end();
@@ -125,44 +129,60 @@ export function create(req, res) {
 
 function uploadImage(entity) {
   return Monosvc.create(entity)
-    .then(() => {
+    .then(e => {
       return sleep(300, () => {
-        console.log('Image upload!');
+        console.log('Image uploaded.. '+ e);
+        return e;
       });
     });
 }
 
-function notifyUser() {
+function notifyUser(id) {
   return sleep(500, () => {
-    console.log('Email sent to user');
+    console.log('Email sent to user '+id);
+    return Monosvc.update({_id:id},{ $set: { userNotified: true } });
   });
 }
 
-function assignStars() {
+function assignStars(id, stars) {
   return sleep(100, () => {
     console.log('Stars assigned to user');
+    return Monosvc.update({_id:id},{ $set: { stars: stars } });
   });
 }
 
-function resizeImage() {
+function resizeImage(id) {
   return sleep(600, () => {
     console.log('Image resized');
+    return Monosvc.update({_id:id},{ $set: { resized: true } });
   });
 }
 
-function tweetMessage() {
+function tweetMessage(id) {
   return sleep(400, () => {
     console.log('Message tweeted');
+    return Monosvc.update({_id:id},{ $set: { tweeted: true } });
   });
 }
 
 
-function sleep(time, work) {
+function sleep_(time, work) {
   return new Promise(r => {
     setTimeout(function () {
       if (work)
         work();
       r();
+    }, time);
+  })
+}
+
+function sleep(time, work) {
+  return new Promise(r => {
+    setTimeout(function () {
+      let result = null;
+      if (work)
+        result = work();
+      r(result);
     }, time);
   })
 }

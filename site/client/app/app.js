@@ -6,11 +6,15 @@ angular.module('techzoneApp', [
   'ngResource',
   'ngSanitize',
   'ui.router',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'AngularStompDK'
 ])
-  .config(function($urlRouterProvider, $locationProvider) {
+  .config(function($urlRouterProvider, $locationProvider, ngstompProvider) {
     $urlRouterProvider
       .otherwise('/');
 
     $locationProvider.html5Mode(true);
+    ngstompProvider
+                .url('ws://localhost:15674/ws') // previously /ws
+                .credential('guest', 'guest')
   });

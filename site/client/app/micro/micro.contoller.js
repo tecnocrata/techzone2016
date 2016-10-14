@@ -5,19 +5,31 @@
   let _monoService;
   let _$stomp;
 
-  function log(err){
-    console.log ('Error ->');
+  function log(err) {
+    console.log('Error ->');
     console.log(err);
   }
 
+  function whatToDoWhenMessageComming(message) {
+    items.push(JSON.parse(message.body));
+  }
+
   class MicroComponent {
-    constructor($http, monoService, $stomp) {
+    constructor($http, monoService, ngstomp) {
       this.message = 'Hello';
       _$http = $http;
-     // _$stomp = $stomp;
+      _$stomp = ngstomp;
+      console.log(_$stomp);
       _monoService = monoService;
       let connectHeaders = {}; //'guest', 'guest'
       this.images = [];
+
+      ngstomp
+        .subscribeTo('/topic/item')
+        .callback(whatToDoWhenMessageComming)
+        .connect();
+
+
       /*_$stomp
         .connect('http://localhost:15674/stomp', connectHeaders, log)
         // frame = CONNECTED headers

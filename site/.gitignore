@@ -5,7 +5,7 @@ data
 .sass-cache
 .idea
 *.sqlite
-site/client/bower_components
+client/bower_components
 dist
 /server/config/local.env.js
 npm-debug.log

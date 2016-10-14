@@ -12,8 +12,7 @@
     "angular-bootstrap": "~1.1.2",
     "font-awesome": ">=4.1.0",
     "lodash": "~2.4.1",
-    "angular-ui-router": "~0.2.15",
-    "ng-stomp": "^0.3.0"
+    "angular-ui-router": "~0.2.15"
   },
   "devDependencies": {
     "angular-mocks": "~1.5.0"

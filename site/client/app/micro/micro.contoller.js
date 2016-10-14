@@ -14,11 +14,11 @@
     constructor($http, monoService, $stomp) {
       this.message = 'Hello';
       _$http = $http;
-      _$stomp = $stomp;
+     // _$stomp = $stomp;
       _monoService = monoService;
       let connectHeaders = {}; //'guest', 'guest'
       this.images = [];
-      _$stomp
+      /*_$stomp
         .connect('http://localhost:15674/stomp', connectHeaders, log)
         // frame = CONNECTED headers
         .then(function (frame) {
@@ -43,7 +43,7 @@
           $stomp.disconnect().then(function () {
             $log.info('disconnected')
           })
-        });
+        });*/
 
       _monoService.getAll()
         .then(result => {

@@ -6,8 +6,7 @@ angular.module('techzoneApp', [
   'ngResource',
   'ngSanitize',
   'ui.router',
-  'ui.bootstrap',
-  'ngStomp'
+  'ui.bootstrap'
 ])
   .config(function($urlRouterProvider, $locationProvider) {
     $urlRouterProvider

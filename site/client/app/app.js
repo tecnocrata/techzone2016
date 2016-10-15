@@ -15,6 +15,9 @@ angular.module('techzoneApp', [
 
     $locationProvider.html5Mode(true);
     ngstompProvider
-                .url('ws://localhost:15674/ws') // previously /ws
-                .credential('guest', 'guest')
+                .url('http://localhost:15674/stomp') // previously ws://localhost:15674/ws or /ws or 
+                .credential('abx-admin', 'abx01')
+                .vhost('/')
+                .class(SockJS)
+                .debug(true);
   });

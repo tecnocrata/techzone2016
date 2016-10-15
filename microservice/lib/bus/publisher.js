@@ -1,6 +1,7 @@
 'use strict'
 
 var open = require('amqplib').connect('amqp://abx-admin:abx01@localhost');
+//var open = require('amqplib').connect('amqp://guest:guest@localhost');
 
 
 function sendSimpleUnicastMessage(queueName, message) {
@@ -43,8 +44,9 @@ function sendStompMessage (route, message){
         })
         .then(ch => {
             ch.assertExchange(exchange, 'topic', { durable: true });
+            //ch.publish(exchange, route, new Buffer(message), {contentType: "text/plain", deliveryMode: 2});
             ch.publish(exchange, route, new Buffer(message));
-            console.log(" [x] Stomp Message Sent %s", message);
+            console.log(" [x] Stomp Message Sent: %s", message);
         });
 }
 

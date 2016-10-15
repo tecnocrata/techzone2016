@@ -11,7 +11,10 @@
   }
 
   function whatToDoWhenMessageComming(message) {
-    items.push(JSON.parse(message.body));
+    console.log ('Este es mi mensaje...');
+    //items.push(JSON.parse(message.body));
+    //console.log (JSON.parse(message.body));
+    console.log (message.body);
   }
 
   class MicroComponent {
@@ -25,9 +28,10 @@
       this.images = [];
 
       ngstomp
-        .subscribeTo('/topic/item')
+        .subscribeTo('/topic/image.upload')
         .callback(whatToDoWhenMessageComming)
         .connect();
+
 
 
       /*_$stomp

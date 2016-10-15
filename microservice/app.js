@@ -34,7 +34,7 @@ app.get('/sendbrowser', function (req, res) {
     res.status(401).send ('Message parameter required!');
     return;
   }
-  sender.sendStompMessage('image.upload', req.query.message);
+  sender.sendStompMessage('image.upload', req.query.message); //TODO what about image.upload/refresh
   res.status(200).end();
 });
 

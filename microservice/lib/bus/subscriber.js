@@ -2,18 +2,7 @@
 
 var util = require('util');
 var open = require('amqplib').connect('amqp://abx-admin:abx01@localhost');
-/*open.then(function(conn) {
-  return conn.createChannel();
-}).then(function(ch) {
-  return ch.assertQueue(q).then(function(ok) {
-    return ch.consume(q, function(msg) {
-      if (msg !== null) {
-        console.log(msg.content.toString());
-        ch.ack(msg);
-      }
-    });
-  });
-}).catch(console.warn);*/
+//var open = require('amqplib').connect('amqp://guest:guest@localhost');
 
 //I think listeners/subscribers should have a separate connection, I will test as is
 //If found problems I will share one connection and create separate channels

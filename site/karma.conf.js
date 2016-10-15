@@ -26,9 +26,8 @@ module.exports = function(config) {
       'client/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'client/bower_components/lodash/dist/lodash.compat.js',
       'client/bower_components/angular-ui-router/release/angular-ui-router.js',
-      'client/bower_components/sockjs-client/dist/sockjs.js',
       'client/bower_components/stomp-websocket/lib/stomp.min.js',
-      'client/bower_components/ng-stomp/src/ng-stomp.js',
+      'client/bower_components/AngularStompDK/dist/angular-stomp.js',
       'client/bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'client/app/app.js',

@@ -63,7 +63,7 @@ function setupSubscriber(exchange, workerProcess) {
             return ch.assertQueue('', { exclusive: true });
         })
         .then(q => {
-            console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q.queue);
+            console.log(" [*] Waiting for messages in %s at broadcaster channel. To exit press CTRL+C", q.queue);
             channel.bindQueue(q.queue, exchange, '');
 
             channel.consume(q.queue, function (msg) {

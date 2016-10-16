@@ -12,8 +12,8 @@ config.express = {
 config.rabbitmq = {
   port: process.env.RABBITMQ_PORT || 5672,
   host: process.env.RABBITMQ_HOST || "0.0.0.0", 
-  login: process.env.RABBITMQ_USER || "guest",
-  password: process.env.RABBITMQ_PASSWORD || "guest"
+  login: process.env.RABBITMQ_USER || "abx-admin", //TODO: change to guest
+  password: process.env.RABBITMQ_PASSWORD || "abx01" //TODO: change to guest
 };
 
 config.mongodb = {

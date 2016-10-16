@@ -16,9 +16,10 @@ angular.module('techzoneApp', [
     $locationProvider.html5Mode(true);
     ngstompProvider
                 .url('ws://localhost:15674/ws') // previously _ or http://localhost:15674/stomp, doesn't work with /ws only
-                .credential('guest', 'guest')
+                .credential('abx-admin', 'abx01')
+                //.credential('guest', 'guest')
                 .vhost('/')
-                //.debug(true);
+                .debug(true);
 
     //Working with sockjs but recomended for old browsers only
     /*ngstompProvider

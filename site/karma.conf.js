@@ -28,6 +28,7 @@ module.exports = function(config) {
       'client/bower_components/angular-ui-router/release/angular-ui-router.js',
       'client/bower_components/stomp-websocket/lib/stomp.min.js',
       'client/bower_components/AngularStompDK/dist/angular-stomp.js',
+      'client/bower_components/sockjs/sockjs.js',
       'client/bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'client/app/app.js',

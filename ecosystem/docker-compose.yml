@@ -22,12 +22,12 @@ services:
   01-notifier:
     build: ../ecosystem/01.notifier/
     ports:
-      - "3000:8081"
+      - "8081:80"
     depends_on:
       - rabbit
     entrypoint: ./wait-for-it.sh rabbit:5672 -- npm start
     environment:
-      NODE_ENV: development
+      NODE_ENV: production
       MONGO_URL: mongodb://mongo/techzone-db
       RABBITMQ_HOST: rabbit
       RABBITMQ_USER: abx-admin

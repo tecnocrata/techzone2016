@@ -7,7 +7,6 @@ COPY . usr/src/apx
 #&& chmod +x /usr/src/apx/wait-for-it.sh
 RUN chmod +x /usr/src/apx/wait-for-it.sh
 WORKDIR usr/src/apx
- 
 
 EXPOSE 3000
 CMD ["npm","start"]

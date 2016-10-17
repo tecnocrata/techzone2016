@@ -12,6 +12,7 @@
 import _ from 'lodash';
 import Monosvc from './monosvc.model';
 import util from 'util';
+import publisher from '../../lib/bus/publisher';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -92,7 +93,7 @@ export function create(req, res) {
   let entity =req.body;
   let id;
 
-  uploadImage(entity)
+  /*uploadImage(entity)
     .then(e => {
       id = e._id;
       //res.status(200).end();
@@ -117,14 +118,19 @@ export function create(req, res) {
     .catch((err) => {
       console.log('Unexpected error ' + err);
       res.status(402).send(err);
-    })
+    })*/
 
   //2. Product Owner: Notify User
   //3. Social Media Advisor: Give Badges to Each User for each UploadImage
   //4. Data Base Admin: Resize images!
   //5. Product Owner: Tweet the images
 
-  //Let's suppose another user add an image (call api using postman)
+  uploadImage(entity)
+    .then(e => {
+      id = e._id;
+      publisher.sendBroadcastMessage ('image.uploaded',id);
+      res.status(200).end();
+    })
 }
 
 function uploadImage(entity) {

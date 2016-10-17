@@ -39,7 +39,9 @@ var all = {
         safe: true
       }
     }
-  }
+  },
+
+  rabbitmqURL: 'amqp://abx-admin:abx01@localhost'
 };
 
 // Export the config object based on the NODE_ENV

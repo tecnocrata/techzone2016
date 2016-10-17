@@ -82,7 +82,7 @@ receiver.listenSimpleQueue('hello', msg => {
 });
 
 receiver.listenBroadcast ('image.uploaded', msg =>{
-  log.info('(Notifier - Microservice) Processing message now ' + msg +' from exchange ex.regards');
-})
+  log.info('(Notifier - Microservice) Processing message now ...' + msg +' from exchange image.uploaded');
+});
 
 module.exports = server;

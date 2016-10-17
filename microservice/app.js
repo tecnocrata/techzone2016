@@ -8,7 +8,7 @@ var server = require('http').createServer(app);
 var info = require('./controllers/info');
 var sender = require('./lib/bus/publisher');
 var receiver = require('./lib/bus/subscriber');
-//var services = require('./services');
+var repository = require('./lib/dbrepository');
 
 bole.output({level: "debug", stream: process.stdout});
 var mongodb = require('mongodb');
@@ -38,21 +38,7 @@ app.get('/sendbrowser', function (req, res) {
   res.status(200).end();
 });
 
-/*app.get('/receive', function (req, res) {
-  res.send('This page is receiving data\n');
-  receiver.subscribeMessage('testexchange', '', function (message) {
-    log.info('Received message: ' + message.data.toString('utf-8'));
-  });
-});*/
-
 app.get('/info', function (req, res) {
-  /*services.getMongoDbConnection(function(error, db) {
-    var document = {name:"Alex", title:"About MongoDB"};
-    db.collection('test').insert(document, function(err, records) {
-      if (err) throw err;
-      log.info("Record added");
-    });
-  });*/
   res.send(info.showInfo());
 });
 
@@ -92,10 +78,11 @@ setImmediate(startServer);
 
 receiver.listenSimpleQueue('hello', msg => {
   log.info('(Microservice) Processing message now ' + msg +' from Queue hello');
+  repository.updateData('5804eb8c90616c01a29cc44f');
 });
 
-receiver.listenBroadcast ('ex.regards', msg =>{
-  log.info('(Microservice) Processing message now ' + msg +' from exchange ex.regards');
+receiver.listenBroadcast ('image.uploaded', msg =>{
+  log.info('(Notifier - Microservice) Processing message now ' + msg +' from exchange ex.regards');
 })
 
 module.exports = server;

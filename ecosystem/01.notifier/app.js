@@ -8,7 +8,7 @@ var server = require('http').createServer(app);
 var info = require('./controllers/info');
 var sender = require('./lib/bus/publisher');
 var receiver = require('./lib/bus/subscriber');
-//var services = require('./services');
+var repository = require('./lib/dbrepository');
 
 bole.output({level: "debug", stream: process.stdout});
 var mongodb = require('mongodb');
@@ -56,9 +56,10 @@ function startServer() {
 
 setImmediate(startServer);
 
-/*receiver.listenSimpleQueue('hello', msg => {
+receiver.listenSimpleQueue('hello', msg => {
   log.info('(Microservice) Processing message now ' + msg +' from Queue hello');
-});*/
+  repository.updateData('5804eb8c90616c01a29cc44f');
+});
 
 receiver.listenBroadcast ('image.uploaded', msg =>{
   log.info('(Notifier - Microservice) Processing message now ' + msg +' from exchange ex.regards');

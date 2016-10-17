@@ -48,6 +48,6 @@ config.rabbitmqURL = "amqp://" + config.rabbitmq.login + ":" + config.rabbitmq.p
   "@" + config.rabbitmq.host + ":" + config.rabbitmq.port;
 
 config.mongodbURL = "mongodb://" + config.mongodb.host + ":" + config.mongodb.port +
-  "/" + config.mongodb.db + "_" + currentENV;
+  "/" + config.mongodb.db; //"/" + config.mongodb.db + "_" + currentENV;
 
 config.currentENV = currentENV;

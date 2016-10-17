@@ -28,7 +28,7 @@ services:
     entrypoint: ./wait-for-it.sh rabbit:5672 -- npm start
     environment:
       NODE_ENV: production
-      MONGO_URL: mongodb://mongo/techzone-db
+      MONGO_URL: mongodb://mongo/techzone-dev
       RABBITMQ_HOST: rabbit
       RABBITMQ_USER: abx-admin
       RABBITMQ_PASSWORD: abx01

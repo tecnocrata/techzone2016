@@ -19,7 +19,7 @@ angular.module('techzoneApp', [
                 .credential('abx-admin', 'abx01')
                 //.credential('guest', 'guest')
                 .vhost('/')
-                .debug(true);
+                //.debug(true);
 
     //Working with sockjs but recomended for old browsers only
     /*ngstompProvider

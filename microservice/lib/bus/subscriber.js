@@ -52,7 +52,6 @@ function setupSimpleQueue(queueName, workerProcess) {
 
 function setupSubscriber(exchange, workerProcess) {
     let channel;
-    //let ex = 'logs';
     open
         .then(conn => {
             return conn.createChannel();

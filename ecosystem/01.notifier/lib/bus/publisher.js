@@ -31,6 +31,10 @@ function sendBroadcastMessage(exchange, message) {
         .then(ch => {
             //var ex = 'logs';
             //var msg = process.argv.slice(2).join(' ') || 'Hello World!';
+            if (!message){
+                console.log ('There is no message for exchange '+ exchange);
+                return;
+            }
             ch.assertExchange(exchange, 'fanout', { durable: false });
             ch.publish(exchange, '', new Buffer(message));
             console.log(" [x] Broadcast Sent %s", message);
@@ -44,9 +48,13 @@ function sendStompMessage (route, message){
             return conn.createChannel();
         })
         .then(ch => {
+            if (!message){
+                console.log ('There is no message (broadcast) for exchange '+ exchange);
+                return;
+            }
             ch.assertExchange(exchange, 'topic', { durable: true });
             //ch.publish(exchange, route, new Buffer(message), {contentType: "text/plain", deliveryMode: 2});
-            ch.publish(exchange, route, new Buffer(message));
+            ch.publish(exchange, route, new Buffer(message.toString()));
             console.log(" [x] Stomp Message Sent: %s", message);
         });
 }

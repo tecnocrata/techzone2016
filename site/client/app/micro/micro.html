@@ -1,1 +1,51 @@
-<div>This is the micro view.</div>
+<div><h2>Microservice - Photo Gallery</h2></div>
+
+<form>
+    <div class="imageentry-block">
+        <label for="imageName">Upload image * </label>
+        <input id="imageName" type="text" ng-model="$ctrl.imageName" />
+        <button ng-click="$ctrl.uploadImage()"> Upload now! </button>
+    </div>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        User Notified
+                    </th>
+                    <th>
+                        Badges
+                    </th>
+                    <th>
+                        Resized
+                    </th>
+                    <th>
+                        Tweeted
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in $ctrl.images">
+                    <td>
+                        {{item.imageName}}
+                    </td>
+                    <td>
+                        <input type="checkbox" ng-model="item.userNotified" ng-disabled="true" />
+                    </td>
+                    <td>
+                        {{item.stars}}
+                    </td>
+                    <td>
+                         <input type="checkbox" ng-model="item.resized" ng-disabled="true" />
+                    </td>
+                    <td>
+                         <input type="checkbox" ng-model="item.tweeted" ng-disabled="true" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</form>

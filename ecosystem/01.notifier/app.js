@@ -1,7 +1,7 @@
 var express = require('express');
 var config = require('./config');
 var path = require('path');
-var bole   = require('bole');
+var bole = require('bole');
 var request = require('request');
 var app = express();
 var server = require('http').createServer(app);
@@ -10,7 +10,7 @@ var sender = require('./lib/bus/publisher');
 var receiver = require('./lib/bus/subscriber');
 var repository = require('./lib/dbrepository');
 
-bole.output({level: "debug", stream: process.stdout});
+bole.output({ level: "debug", stream: process.stdout });
 var mongodb = require('mongodb');
 var MongoClient = mongodb.MongoClient;
 var assert = require('assert');
@@ -21,8 +21,8 @@ app.get('/', function (req, res) {
 });
 
 app.get('/send', function (req, res) {
-  if (!req.query.message){
-    res.status(401).send ('Message parameter required!');
+  if (!req.query.message) {
+    res.status(401).send('Message parameter required!');
     return;
   }
   sender.sendUnicastMessage('hello', req.query.message);
@@ -30,8 +30,8 @@ app.get('/send', function (req, res) {
 });
 
 app.get('/sendbrowser', function (req, res) {
-  if (!req.query.message){
-    res.status(401).send ('Message parameter required!');
+  if (!req.query.message) {
+    res.status(401).send('Message parameter required!');
     return;
   }
   sender.sendStompMessage('image.upload', req.query.message); //TODO what about image.upload/refresh
@@ -56,13 +56,24 @@ function startServer() {
 
 setImmediate(startServer);
 
-receiver.listenSimpleQueue('hello', msg => {
+/*receiver.listenSimpleQueue('hello', msg => {
   log.info('(Microservice) Processing message now ' + msg +' from Queue hello');
-  repository.updateData('5804eb8c90616c01a29cc44f');
-});
+});*/
 
-receiver.listenBroadcast ('image.uploaded', msg =>{
-  log.info('(Notifier - Microservice) Processing message now ...' + msg +' from exchange image.uploaded');
-});
+let id;
+receiver.listenBroadcast('image.uploaded', msg => {
+  log.info('(Notifier - Microservice)   Processing message now ...' + msg + ' from exchange image.uploaded');
+  id = msg;
+  console.log('Updating data into db with id: ' + id);
+  repository.updateData(id)
+    .then(() => {
+      console.log('Sending event to browser...');
+      sender.sendStompMessage('user.notified', id);
+    })
+    .catch(err => {
+      console.log('Unexpected error...' + err);
+    });
+})
+
 
 module.exports = server;

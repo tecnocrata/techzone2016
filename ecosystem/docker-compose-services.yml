@@ -1,0 +1,20 @@
+version: '2'
+services:
+  mongo:
+    image: mongo
+    volumes:
+      - "/var/abx/mongodb:/data/db"
+    ports:
+      - "27017:27017"
+
+  rabbit:
+    image: byteflair/rabbitmq-stomp
+    ports:
+        - "15672:15672"
+        - "5672:5672"
+        - "15674:15674"
+        - "61613:61613"
+    environment:
+        RABBITMQ_ERLANG_COOKIE: abx-01
+        RABBITMQ_DEFAULT_USER: abx-admin
+        RABBITMQ_DEFAULT_PASS: abx01

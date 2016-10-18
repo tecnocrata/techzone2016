@@ -22,25 +22,36 @@
 
       ngstomp
         .subscribeTo('/topic/user.notified')
-        .callback(updateNotification)
+        .callback((message) => {
+          this.updateNotification(message);
+        })
         .connect();
 
       _monoService.getAll()
         .then(result => {
           this.images = result.data;
-          console.log('Displaying first time...');
-          console.log(result.data);
         });
-
-      function updateNotification(message) {
-        console.log('Este es mi mensaje...');
-        //items.push(JSON.parse(message.body));
-        //console.log (JSON.parse(message.body));
-        console.log(message.body);
-      }
     }
 
+    updateNotification(message) {
+      console.log('Notification message arrived...');
+      console.log(message.body);
+      let item = JSON.parse(message.body);
+      let found = false;
+      for (let i = 0; i < this.images.length; i++) {
+        if (this.images[i]._id === item._id) {
+          console.log('Item found: ' + this.images[i]);
+          this.images[i].stars = item.stars;
+          found = true;
+          break;
+        }
+      }
 
+      if (!found) {
+        console.log ('Item NOT found and adding....')
+        this.images.push(item);
+      }
+    }
 
     uploadImage() {
       _monoService.uploadImage(this.imageName)

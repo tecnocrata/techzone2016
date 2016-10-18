@@ -9,6 +9,7 @@ var info = require('./controllers/info');
 var sender = require('./lib/bus/publisher');
 var receiver = require('./lib/bus/subscriber');
 var repository = require('./lib/dbrepository');
+var timer = require('./lib/time.util');
 
 bole.output({ level: "debug", stream: process.stdout });
 var mongodb = require('mongodb');
@@ -64,11 +65,15 @@ let id;
 receiver.listenBroadcast('image.uploaded', msg => {
   log.info('(Notifier - Microservice)   Processing message now ...' + msg + ' from exchange image.uploaded');
   id = msg;
-  console.log('Updating data into db with id: ' + id);
-  repository.updateData(id)
-    .then(() => {
+
+  timer.sleep(600, () => {
+    console.log('Email sent to user ' + id);
+    return repository.updateData(id);
+  })
+    .then(item => {
       console.log('Sending event to browser...');
-      sender.sendStompMessage('user.notified', id);
+      console.log (item.value);
+      sender.sendStompMessage('user.notified', JSON.stringify(item.value));
     })
     .catch(err => {
       console.log('Unexpected error...' + err);

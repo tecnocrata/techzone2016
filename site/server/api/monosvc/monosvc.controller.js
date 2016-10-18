@@ -144,7 +144,7 @@ function uploadImage(entity) {
 }
 
 function notifyUser(id) {
-  return sleep(500, () => {
+  return sleep(600, () => {
     console.log('Email sent to user '+id);
     return Monosvc.update({_id:id},{ $set: { userNotified: true } });
   });

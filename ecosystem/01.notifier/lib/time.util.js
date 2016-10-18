@@ -3,9 +3,10 @@
 function sleep(time, work) {
   return new Promise(r => {
     setTimeout(function () {
+      let result = null;
       if (work)
-        work();
-      r();
+        result = work();
+      r(result);
     }, time);
   })
 }

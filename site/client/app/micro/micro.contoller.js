@@ -30,6 +30,11 @@
         .callback((message) => {
           this.updateStars(message);
         })
+        .and()
+        .subscribeTo('/topic/image.resized')
+        .callback((message) => {
+          this.updateResize(message);
+        })
         .connect();
 
       _microService.getAll()
@@ -67,6 +72,26 @@
         if (this.images[i]._id === item._id) {
           console.log('Item found: ' + this.images[i]);
           this.images[i].stars = item.stars;
+          found = true;
+          break;
+        }
+      }
+
+      if (!found) {
+        console.log ('Item NOT found and adding....')
+        this.images.push(item);
+      }
+    }
+
+        updateResize(message) {
+      console.log('Resized message arrived...');
+      console.log(message.body);
+      let item = JSON.parse(message.body);
+      let found = false;
+      for (let i = 0; i < this.images.length; i++) {
+        if (this.images[i]._id === item._id) {
+          console.log('Item found: ' + this.images[i]);
+          this.images[i].resized = true;
           found = true;
           break;
         }

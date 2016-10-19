@@ -54,3 +54,21 @@ services:
     links:
       - mongo
       - rabbit
+
+  03-resizer:
+    build: ../ecosystem/03.resizer/
+    ports:
+      - "8083:80"
+    depends_on:
+      - rabbit
+    entrypoint: ./wait-for-it.sh rabbit:5672 -- npm start
+    environment:
+      NODE_ENV: production
+      MONGO_HOST: mongo
+      MONGO_DATABASE: techzone-dev
+      RABBITMQ_HOST: rabbit
+      RABBITMQ_USER: abx-admin
+      RABBITMQ_PASSWORD: abx01
+    links:
+      - mongo
+      - rabbit

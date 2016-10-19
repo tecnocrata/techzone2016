@@ -91,14 +91,14 @@ function notifyUser(id) {
 }
 
 function assignStars(id, stars) {
-  return sleep(100, () => {
+  return sleep(600, () => {
     console.log('Stars assigned to user');
     return Monosvc.update({_id:id},{ $set: { stars: stars } });
   });
 }
 
 function resizeImage(id) {
-  return sleep(600, () => {
+  return sleep(1000, () => {
     console.log('Image resized');
     return Monosvc.update({_id:id},{ $set: { resized: true } });
   });

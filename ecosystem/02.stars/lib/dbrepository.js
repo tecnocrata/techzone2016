@@ -13,8 +13,9 @@ var connection = client.connect(url);
 function updateData(id) {
     return connection
         .then(db => {
-            console.log('Updating user notified into db....');
-            return db.collection('microsvcs').findAndModify({ _id: new mongo.ObjectID(id) }, [], { $set: { userNotified: true } }, { new: true });
+            let stars = Math.floor(Math.random() * 5) + 1;
+            console.log('new stars value = ' + stars);
+            return db.collection('microsvcs').findAndModify({ _id: new mongo.ObjectID(id) }, [], { $set: { stars: stars } }, { new: true });
         })
         .then(item => {
             console.log('Document updated ->'+item);

@@ -25,6 +25,11 @@
         .callback((message) => {
           this.updateNotification(message);
         })
+        .and()
+        .subscribeTo('/topic/image.stars')
+        .callback((message) => {
+          this.updateStars(message);
+        })
         .connect();
 
       _microService.getAll()
@@ -35,6 +40,26 @@
 
     updateNotification(message) {
       console.log('Notification message arrived...');
+      console.log(message.body);
+      let item = JSON.parse(message.body);
+      let found = false;
+      for (let i = 0; i < this.images.length; i++) {
+        if (this.images[i]._id === item._id) {
+          console.log('Item found: ' + this.images[i]);
+          this.images[i].userNotified = true;
+          found = true;
+          break;
+        }
+      }
+
+      if (!found) {
+        console.log ('Item NOT found and adding....')
+        this.images.push(item);
+      }
+    }
+
+    updateStars(message) {
+      console.log('Stars message arrived...');
       console.log(message.body);
       let item = JSON.parse(message.body);
       let found = false;

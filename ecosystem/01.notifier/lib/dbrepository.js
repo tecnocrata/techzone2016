@@ -15,7 +15,7 @@ function updateData(id) {
         .then(db => {
             let stars = Math.floor(Math.random() * 5) + 1;
             console.log('new stars value = ' + stars);
-            return db.collection('monosvcs').findAndModify({ _id: new mongo.ObjectID(id) }, [], { $set: { stars: stars } }, { new: true });
+            return db.collection('microsvcs').findAndModify({ _id: new mongo.ObjectID(id) }, [], { $set: { stars: stars } }, { new: true });
         })
         .then(item => {
             console.log('Document updated ->'+item);

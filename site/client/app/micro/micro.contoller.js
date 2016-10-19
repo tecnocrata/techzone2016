@@ -2,7 +2,7 @@
 (function () {
 
   let _$http;
-  let _monoService;
+  let _microService;
   let _$stomp;
 
   function log(err) {
@@ -11,12 +11,12 @@
   }
 
   class MicroComponent {
-    constructor($http, monoService, ngstomp) {
+    constructor($http, microService, ngstomp) {
       this.message = 'Hello';
       _$http = $http;
       _$stomp = ngstomp;
       console.log(_$stomp);
-      _monoService = monoService;
+      _microService = microService;
       let connectHeaders = {}; //'guest', 'guest'
       this.images = [];
 
@@ -27,7 +27,7 @@
         })
         .connect();
 
-      _monoService.getAll()
+      _microService.getAll()
         .then(result => {
           this.images = result.data;
         });
@@ -54,9 +54,9 @@
     }
 
     uploadImage() {
-      _monoService.uploadImage(this.imageName)
+      _microService.uploadImage(this.imageName)
         .then(() => {
-          return _monoService.getAll();
+          return _microService.getAll();
         })
         .then((result) => {
           console.log('Data retrieved !!!!!!!!!!!!!!!!!!!!!!!!!!!!!');

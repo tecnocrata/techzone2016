@@ -10,7 +10,7 @@
 'use strict';
 
 import _ from 'lodash';
-import Monosvc from './monosvc.model';
+import Microsvc from './microsvc.model';
 import util from 'util';
 import publisher from '../../lib/bus/publisher';
 
@@ -18,10 +18,10 @@ import publisher from '../../lib/bus/publisher';
 
 // Gets a list of Monosvcs
 export function index(req, res) {
-  console.log ('[GET /api/monosvc/] ....Trying to retrieve all content');
-  return Monosvc.find().exec()
+  console.log ('[GET /api/microsvc/] ....Trying to retrieve all content');
+  return Microsvc.find().exec()
     .then(e=>{
-      console.log ('[GET /api/monosvc/] ...Result: '+e);
+      console.log ('[GET /api/microsvc/] ...Result: '+e);
       res.status(200).json(e);
     })
     .catch(handleError(res));
@@ -34,43 +34,11 @@ export function create(req, res) {
     return;
   }
 
-  console.log ('[POST /api/monosvc/] .... Trying to save the following content: '+ req.body);
+  console.log ('[POST /api/microsvc/] .... Trying to save the following content: '+ req.body);
   //1. UploadImage
   let startDate = new Date();
   let entity =req.body;
   let id;
-
-  /*uploadImage(entity)
-    .then(e => {
-      id = e._id;
-      //res.status(200).end();
-      return notifyUser(id);
-    })
-   .then(() => {
-      //res.status(200).end();
-      let stars = Math.floor(Math.random() * 5) + 1;
-      return assignStars(id, stars);
-    })
-    .then(() => {
-      //res.status(200).end();
-      return resizeImage(id);
-    })
-    .then(() => {
-      //res.status(200).end();
-      return tweetMessage(id);
-    })
-    .then(() => {
-      res.status(200).end();
-    })
-    .catch((err) => {
-      console.log('Unexpected error ' + err);
-      res.status(402).send(err);
-    })*/
-
-  //2. Product Owner: Notify User
-  //3. Social Media Advisor: Give Badges to Each User for each UploadImage
-  //4. Data Base Admin: Resize images!
-  //5. Product Owner: Tweet the images
 
   uploadImage(entity)
     .then(e => {
@@ -81,7 +49,7 @@ export function create(req, res) {
 }
 
 function uploadImage(entity) {
-  return Monosvc.create(entity)
+  return Microsvc.create(entity)
     .then(e => {
       return sleep(300, () => {
         console.log('Image uploaded.. '+ e);
@@ -90,33 +58,33 @@ function uploadImage(entity) {
     });
 }
 
-function notifyUser(id) {
+/*function notifyUser(id) {
   return sleep(600, () => {
     console.log('Email sent to user '+id);
-    return Monosvc.update({_id:id},{ $set: { userNotified: true } });
+    return Microsvc.update({_id:id},{ $set: { userNotified: true } });
   });
 }
 
 function assignStars(id, stars) {
   return sleep(100, () => {
     console.log('Stars assigned to user');
-    return Monosvc.update({_id:id},{ $set: { stars: stars } });
+    return Microsvc.update({_id:id},{ $set: { stars: stars } });
   });
 }
 
 function resizeImage(id) {
   return sleep(600, () => {
     console.log('Image resized');
-    return Monosvc.update({_id:id},{ $set: { resized: true } });
+    return Microsvc.update({_id:id},{ $set: { resized: true } });
   });
 }
 
 function tweetMessage(id) {
   return sleep(400, () => {
     console.log('Message tweeted');
-    return Monosvc.update({_id:id},{ $set: { tweeted: true } });
+    return Microsvc.update({_id:id},{ $set: { tweeted: true } });
   });
-}
+}*/
 
 function sleep(time, work) {
   return new Promise(r => {
@@ -186,7 +154,7 @@ function handleError(res, statusCode) {
 
 // Gets a single Monosvc from the DB
 export function show(req, res) {
-  return Monosvc.findById(req.params.id).exec()
+  return Microsvc.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));

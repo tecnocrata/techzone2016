@@ -58,33 +58,6 @@ function uploadImage(entity) {
     });
 }
 
-/*function notifyUser(id) {
-  return sleep(600, () => {
-    console.log('Email sent to user '+id);
-    return Microsvc.update({_id:id},{ $set: { userNotified: true } });
-  });
-}
-
-function assignStars(id, stars) {
-  return sleep(100, () => {
-    console.log('Stars assigned to user');
-    return Microsvc.update({_id:id},{ $set: { stars: stars } });
-  });
-}
-
-function resizeImage(id) {
-  return sleep(600, () => {
-    console.log('Image resized');
-    return Microsvc.update({_id:id},{ $set: { resized: true } });
-  });
-}
-
-function tweetMessage(id) {
-  return sleep(400, () => {
-    console.log('Message tweeted');
-    return Microsvc.update({_id:id},{ $set: { tweeted: true } });
-  });
-}*/
 
 function sleep(time, work) {
   return new Promise(r => {

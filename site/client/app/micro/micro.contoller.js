@@ -35,6 +35,11 @@
         .callback((message) => {
           this.updateResize(message);
         })
+        .and()
+        .subscribeTo('/topic/message.tweeted')
+        .callback((message) => {
+          this.updateTweet(message);
+        })
         .connect();
 
       _microService.getAll()
@@ -58,7 +63,7 @@
       }
 
       if (!found) {
-        console.log ('Item NOT found and adding....')
+        console.log('Item NOT found and adding....')
         this.images.push(item);
       }
     }
@@ -78,12 +83,12 @@
       }
 
       if (!found) {
-        console.log ('Item NOT found and adding....')
+        console.log('Item NOT found and adding....')
         this.images.push(item);
       }
     }
 
-        updateResize(message) {
+    updateResize(message) {
       console.log('Resized message arrived...');
       console.log(message.body);
       let item = JSON.parse(message.body);
@@ -98,7 +103,27 @@
       }
 
       if (!found) {
-        console.log ('Item NOT found and adding....')
+        console.log('Item NOT found and adding....')
+        this.images.push(item);
+      }
+    }
+
+    updateTweet(message) {
+      console.log('Tweet confirmation message arrived...');
+      console.log(message.body);
+      let item = JSON.parse(message.body);
+      let found = false;
+      for (let i = 0; i < this.images.length; i++) {
+        if (this.images[i]._id === item._id) {
+          console.log('Item found: ' + this.images[i]);
+          this.images[i].tweeted = true;
+          found = true;
+          break;
+        }
+      }
+
+      if (!found) {
+        console.log('Item NOT found and adding....')
         this.images.push(item);
       }
     }
